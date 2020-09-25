@@ -1,0 +1,24 @@
+25.09.2020
+
+BEOBACHTUNG:
+Dynamische Werte Abfrage von PA_remote (auf Frischling) gibt keine "live" Werte.
+Ich rufe die Funktion fill auf und gleich dannach frage ich 100-mal den
+Werte von currentLiquidLevel und bekomme immer 0.0 züruck. Wenn ich das PA_remote 
+noch mal starte, bekomme ich den Wert 99.999.
+
+BEOBACHTUNG:
+PA_remote (auf Frischling) fragt App_local (in jar) nach currentLiquidLevel -
+es gibt NullPointerException. Lief App_local in Eclipse gabe es keinen Problem.
+Kein Zugriff auf dynamische Werte mit remote - vielleicht weil CC nicht 
+involviert und einfach lambda Function wie bei statischen Werten.
+
+Auch Functionsaufruf funktioniert nicht von remote wenn App_local in jar ist.
+
+PROBLEM:
+App_local läuft auf Raspberry in Jar aber es ist nicht möglich mit ihm von 
+Außen (remote) zu connecten. Es ist aber möglich wenn App_remote auf 
+denselben Raspberry läuft.
+Die AAS ist aber von Außen in Browser sichtbar.
+
+-> Es gibt keinen Verbingung zu Jar durch Netwerk.
+

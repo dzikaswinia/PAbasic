@@ -1,5 +1,6 @@
-/home/monika/eclipse-workspace-basyx/projektarbeit/projektarbeit/src/main/java/staciwa/projektarbeit/PasteurizatorControlComponent.java
-/home/monika/eclipse-workspace-basyx/projektarbeit/projektarbeit/src/main/java/staciwa/projektarbeit/App_local.java
-/home/monika/eclipse-workspace-basyx/projektarbeit/projektarbeit/src/main/java/staciwa/projektarbeit/Pasteurizator.java
-/home/monika/eclipse-workspace-basyx/projektarbeit/projektarbeit/src/main/java/staciwa/projektarbeit/App_remote.java
-/home/monika/eclipse-workspace-basyx/projektarbeit/projektarbeit/src/main/java/staciwa/projektarbeit/Tank.java
+/home/monika/eclipse-workspace-projektarbeit/projektarbeit/src/main/java/staciwa/projektarbeit/App_remote.java
+/home/monika/eclipse-workspace-projektarbeit/projektarbeit/src/main/java/staciwa/projektarbeit/App_local.java
+/home/monika/eclipse-workspace-projektarbeit/projektarbeit/src/main/java/staciwa/projektarbeit/Heater.java
+/home/monika/eclipse-workspace-projektarbeit/projektarbeit/src/main/java/staciwa/projektarbeit/Tank.java
+/home/monika/eclipse-workspace-projektarbeit/projektarbeit/src/main/java/staciwa/projektarbeit/Pasteurizator.java
+/home/monika/eclipse-workspace-projektarbeit/projektarbeit/src/main/java/staciwa/projektarbeit/PasteurizatorControlComponent.java

@@ -16,7 +16,7 @@ public class App_remote
 {
 	public static int CC_PORT = 4001;
 	public static int AAS_PORT = 4000;
-	public static String AAS_IP = "192.168.2.106";
+	public static String AAS_IP = "192.168.2.3";
 	
     public static void main( String[] args ) throws Exception
     {
@@ -47,6 +47,9 @@ public class App_remote
 		IProperty maxCapPro = (IProperty) properties.get("maxCapacity");
 		Double maxCap = (Double) maxCapPro.get();
 		System.out.print("\nCapacity: " + maxCap);
+		IProperty currentLiquidLevel = (IProperty) properties.get("currentLiquidLevel");
+		Double curLiqLev = (Double) currentLiquidLevel.get();
+		System.out.println("\nCurrent liquid level: " + curLiqLev);
 		
     }
     

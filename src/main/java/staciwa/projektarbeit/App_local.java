@@ -58,6 +58,8 @@ public class App_local
         startMyControlComponent(pasti);
         startMyAAS(pasti);
         
+        
+        /*
         //Connecting to AAS
         IAASRegistryService registry = new AASRegistryProxy("http://" + App_local.AAS_IP + ":" + App_local.AAS_PORT + "/registry");
         //IAASRegistryService registry = new AASRegistryProxy("http://192.168.2.3:4000/registry");
@@ -77,7 +79,8 @@ public class App_local
 		IProperty tankProperty = (IProperty) properties.get("maxCapacity");
 		double maxCap = (double) tankProperty.get();
 		System.out.println("\nMax Capacity: " + maxCap);
-		
+		*/
+        
 		// TODO Funktionsaufruf ohne AAS, durch ControlComponent
 		/*
 		VABElementProxy proxy = new VABElementProxy("", new JSONConnector(new BaSyxConnector(App_local.CC_IP, App_local.CC_PORT)));
@@ -113,6 +116,14 @@ public class App_local
     		return pasti.getTank().getMaxCapacity(); 
     	}, null), PropertyValueTypeDef.Double);
     	
+    	//dynamic property 
+    	Property currentLiquidLevel = new Property();
+    	currentLiquidLevel.setIdShort("currentLiquidLevel");
+    	currentLiquidLevel.set(VABLambdaProviderHelper.createSimple(() -> {
+    		return pasti.getTank().getCurrentLiquidLevel(); 
+    	}, null), PropertyValueTypeDef.Double);
+    	
+    	
     	// Function 
     	Function<Object[], Object> tankFillInvokable = (params) -> {
 			// From: HandsOn 04
@@ -147,6 +158,7 @@ public class App_local
     	tankSubModel.setIdShort("tank");
     	tankSubModel.setIdentification(IdentifierType.CUSTOM, "tank");
     	tankSubModel.addSubModelElement(maxCapacity);
+    	tankSubModel.addSubModelElement(currentLiquidLevel);
     	
     	
     	  	

@@ -40,9 +40,10 @@ public class Tank {
 	}
 	
 	public void fill() {
-		System.out.println("Tank	will be filled.");
+		
 		boolean tankNotFull = true;
 		while(tankNotFull) {
+			//System.out.println("Tank: current liquid level - " + currentLiquidLevel);
 			if (currentLiquidLevel <= (maxCapacity - changeRate)) {
 				currentLiquidLevel += changeRate;
 			} else {

@@ -8,7 +8,7 @@
   <artifactId>projektarbeit</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>projektarbeit_remote</name>
+  <name>projektarbeit</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -90,7 +90,7 @@
               <archive>
                 <manifest>
 		      	<classpathPrefix>/</classpathPrefix>
-		          <mainClass>staciwa.projektarbeit.App_remote</mainClass>
+		          <mainClass>staciwa.projektarbeit.App_local</mainClass>
               	</manifest>
               </archive>
       	  </configuration>
@@ -110,7 +110,7 @@
               <!-- Here wird die Hauptklasse für "mvn clean compile assembly:single" definiert. -->
               <archive>
                 <manifest>
-                  <mainClass>staciwa.projektarbeit.App_remote</mainClass>
+                  <mainClass>staciwa.projektarbeit.App_local</mainClass>
                 </manifest>
               </archive>
               

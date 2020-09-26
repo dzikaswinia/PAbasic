@@ -21,7 +21,7 @@ public class App_remote
 {
 	
 	//GLOBALS: a network address and port of the device on which the AAS is running.
-	public static String AAS_IP = "192.168.2.107";
+	public static String AAS_IP = "192.168.2.3";
 	public static int CC_PORT = 4001;
 	public static int AAS_PORT = 4000;
 	
@@ -43,6 +43,7 @@ public class App_remote
 		Map<String, ISubModel> submodels = connectedAAS.getSubModels();
 		ISubModel connectedTankSM = submodels.get("tank");
 		System.out.print("Short ID: " + connectedTankSM.getIdShort());
+		
 		// Retrieving the properties of the submodel.
 		Map<String, ISubmodelElement> properties = connectedTankSM.getSubmodelElements(); 
 		IProperty maxCapPro = (IProperty) properties.get("maxCapacity");
@@ -51,11 +52,14 @@ public class App_remote
 		IProperty currentLiquidLevel = (IProperty) properties.get("currentLiquidLevel");
 		Double curLiqLev = (Double) currentLiquidLevel.get();
 		System.out.println("\nCurrent liquid level: " + curLiqLev);
+		
 		// Filling the tank.
 		Map<String, IOperation> operations = connectedTankSM.getOperations();
 		IOperation tankOperation = operations.get("fillTank");
 		tankOperation.invoke();
+		Thread.sleep(5000);
 		
+		curLiqLev = (Double) currentLiquidLevel.get();
 		System.out.println("\nCurrent liquid level: " + curLiqLev);
 		
     }

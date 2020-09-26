@@ -1,6 +1,7 @@
 package staciwa.projektarbeit;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import javax.servlet.http.HttpServlet;
 
@@ -39,7 +40,7 @@ import org.eclipse.basyx.vab.protocol.http.server.VABHTTPInterface;
 public class App_local 
 {
 	//GLOBALS: a network address and port of the device on which the AAS is running.
-	public static String AAS_IP = "localhost";		//TODO von User abfragen?
+	public static String AAS_IP = "192.168.2.3";		//TODO von User abfragen?
 	public static int CC_PORT = 4001;
 	public static int AAS_PORT = 4000;
 	public static String CC_IP = "";
@@ -75,9 +76,11 @@ public class App_local
     	//dynamic property: current liquid level in the tank. 
     	Property currentLiquidLevel = new Property();
     	currentLiquidLevel.setIdShort("currentLiquidLevel");
+    	    	
     	currentLiquidLevel.set(VABLambdaProviderHelper.createSimple(() -> {
     		return pasti.getTank().getCurrentLiquidLevel(); 
     	}, null), PropertyValueTypeDef.Double);
+    	   	
     	
     	tankSubModel.addSubModelElement(maxCapacity);
     	tankSubModel.addSubModelElement(currentLiquidLevel);

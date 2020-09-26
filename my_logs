@@ -14,7 +14,7 @@ involviert und einfach lambda Function wie bei statischen Werten.
 
 Auch Functionsaufruf funktioniert nicht von remote wenn App_local in jar ist.
 
-PROBLEM:
+PROBLEM (behoben):
 App_local läuft auf Raspberry in Jar aber es ist nicht möglich mit ihm von 
 Außen (remote) zu connecten. Es ist aber möglich wenn App_remote auf 
 denselben Raspberry läuft.
@@ -22,3 +22,21 @@ Die AAS ist aber von Außen in Browser sichtbar.
 
 -> Es gibt keinen Verbingung zu Jar durch Netwerk.
 
+
+
+26.09.2020
+
+DONE:
+Projekt: Projektarbeit
+Workspace: eclispse-workspace-basyx
+Repo: PA_old
+
+Es funktioniert auch in Jar remote.
+-> AAS_IP kann nicht "localhost" sein, es muss eine konkrete Addresse sein.
+
+DONE:
+Projekt: Projektarbeit
+Workspace: eclipse-workspace-projektarbeit
+Repo: LAbasic
+
+Es funktinoniert auch in Jar.

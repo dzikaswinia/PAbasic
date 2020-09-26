@@ -37,12 +37,11 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 	 * */
 	protected void controlTank() {
 		
-		System.out.println("CC:	controlTank wird aufgerufen");
-		// TODO starte neues Thread und rufe die Funktionen von Tank-Klasse auf.
-		//this.pasti.getTank().setCurrentLiquidLevel(10.0);
+		
 		
 		new Thread(() -> {
-			for (int i = 0; i < 50; i++) {
+			for (int i = 0; i < 20; i++) {
+				//System.out.println("CC:	current liquid level - " + pasti.getTank().getCurrentLiquidLevel());
 				if (pasti.getTank().getIsFull()) {
 					pasti.getTank().fill();
 				} 
@@ -52,6 +51,7 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 					e.printStackTrace();
 				}
 			}
+			
 			setExecutionState(ExecutionState.COMPLETE.getValue());
 		}).start();
 		

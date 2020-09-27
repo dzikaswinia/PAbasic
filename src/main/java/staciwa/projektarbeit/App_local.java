@@ -1,5 +1,6 @@
 package staciwa.projektarbeit;
 
+import java.util.Scanner;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -40,7 +41,7 @@ import org.eclipse.basyx.vab.protocol.http.server.VABHTTPInterface;
 public class App_local 
 {
 	//GLOBALS: a network address and port of the device on which the AAS is running.
-	public static String AAS_IP = "192.168.2.3";		//TODO von User abfragen?
+	//public static String AAS_IP = "192.168.2.3";		//TODO von User abfragen?
 	public static int CC_PORT = 4001;
 	public static int AAS_PORT = 4000;
 	public static String CC_IP = "";
@@ -49,9 +50,14 @@ public class App_local
     {
         
     	System.out.println("Welcome to Pasteurizator's AAS");
+    	//AAS IP - user input.
+    	Scanner scanner = new Scanner(System.in);
+    	System.out.println("AAS IP: 192.168.2.");
+    	String aas_ip = "192.168.2." + scanner.nextLine();	//TODO falsche input abfangen
+    	//System.out.println("User Input: " + aas_ip);
         Pasteurizator pasti = new Pasteurizator("Milcherhitzter");
         startMyControlComponent(pasti);
-        startMyAAS(pasti);
+        startMyAAS(pasti, aas_ip);
         
     }
     
@@ -59,7 +65,7 @@ public class App_local
      * 
      * @param pasti: the Pasteurizator
      */
-    public static void startMyAAS(Pasteurizator pasti) {
+    public static void startMyAAS(Pasteurizator pasti, String aas_ip) {
     	
     	/**Submodel: Tank
     	 * 
@@ -89,7 +95,7 @@ public class App_local
     	Function<Object[], Object> tankFillInvokable = (params) -> {
 		
 			// Connect to the control component
-			VABElementProxy proxy = new VABElementProxy("", new JSONConnector(new BaSyxConnector(App_local.CC_IP, App_local.CC_PORT)));
+			VABElementProxy proxy = new VABElementProxy("", new JSONConnector(new BaSyxConnector(aas_ip, App_local.CC_PORT)));
  
 			// Select the operation from the control component
 			proxy.setModelPropertyValue("status/opMode", PasteurizatorControlComponent.OPMODE_FILL);
@@ -152,14 +158,14 @@ public class App_local
 		HttpServlet registryServlet = new VABHTTPInterface<IModelProvider>(registryProvider);
 		
 		// Register the VAB model at the directory (locally in this case)
-		AASDescriptor aasDescriptor = new AASDescriptor(aas, "http://" + App_local.AAS_IP + ":" 
+		AASDescriptor aasDescriptor = new AASDescriptor(aas, "http://" + aas_ip + ":" 
 				+ App_local.AAS_PORT + "/pasti/aas");
 		aasDescriptor.addSubmodelDescriptor(new SubmodelDescriptor(tankSubModel, 
-				"http://" + App_local.AAS_IP + ":" + App_local.AAS_PORT + "/pasti/aas/submodels/tank/submodel"));
+				"http://" + aas_ip + ":" + App_local.AAS_PORT + "/pasti/aas/submodels/tank/submodel"));
 		registry.register(aasDescriptor);
 		
 		// Deploy the AAS on a HTTP server
-		BaSyxContext context = new BaSyxContext("", "", App_local.AAS_IP, App_local.AAS_PORT);
+		BaSyxContext context = new BaSyxContext("", "", aas_ip, App_local.AAS_PORT);
 		context.addServletMapping("/pasti/*", aasServlet);
 		context.addServletMapping("/registry/*", registryServlet);
 		AASHTTPServer httpServer = new AASHTTPServer(context);

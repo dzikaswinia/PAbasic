@@ -1,3 +1,30 @@
+
+27.09.2020
+
+ZIEL:
+- schöne Ausgabe auf App_remote
+- testen mit Jar
+- erstellen von Docker Image
+
+
+26.09.2020
+
+DONE:
+Projekt: Projektarbeit
+Workspace: eclispse-workspace-basyx
+Repo: PA_old
+
+Es funktioniert auch in Jar remote.
+-> AAS_IP kann nicht "localhost" sein, es muss eine konkrete Addresse sein.
+
+DONE:
+Projekt: Projektarbeit
+Workspace: eclipse-workspace-projektarbeit
+Repo: LAbasic
+
+Es funktinoniert auch in Jar.
+
+
 25.09.2020
 
 BEOBACHTUNG:
@@ -24,19 +51,3 @@ Die AAS ist aber von Außen in Browser sichtbar.
 
 
 
-26.09.2020
-
-DONE:
-Projekt: Projektarbeit
-Workspace: eclispse-workspace-basyx
-Repo: PA_old
-
-Es funktioniert auch in Jar remote.
--> AAS_IP kann nicht "localhost" sein, es muss eine konkrete Addresse sein.
-
-DONE:
-Projekt: Projektarbeit
-Workspace: eclipse-workspace-projektarbeit
-Repo: LAbasic
-
-Es funktinoniert auch in Jar.

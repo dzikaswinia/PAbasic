@@ -10,6 +10,7 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 
 	public static final String OPMODE_BASIC = "BSTATE";
 	public static final String OPMODE_FILL = "FILL";
+	//public static final String OPMODE_EMPTY = "EMPTY";
 	
 	private Pasteurizator pasti;
 	
@@ -25,40 +26,51 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 		// TODO das verstehe ich nicht
 		if (newExecutionState == ExecutionState.EXECUTE) {
 			if (this.getOperationMode().equals(OPMODE_FILL)) {
-				controlTank();
+				fillTank();
 			} else {
 				setExecutionState(ExecutionState.COMPLETE.getValue());
-			}
+			}		
 		}
-		
 	}
 	
 	/* Es füllt den Tank 
 	 * */
-	protected void controlTank() {
-		
-		
+	protected void fillTank() {
 		
 		new Thread(() -> {
-			for (int i = 0; i < 20; i++) {
-				//System.out.println("CC:	current liquid level - " + pasti.getTank().getCurrentLiquidLevel());
-				if (pasti.getTank().getIsFull()) {
-					pasti.getTank().fill();
-				} 
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
 			
+			if (pasti.getTank().getIsFull()) {
+				pasti.getTank().fill();
+			} 
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			setExecutionState(ExecutionState.COMPLETE.getValue());
 		}).start();
 		
 
 	}
-	
-	
+	/*
+	protected void emptyTank() {
+		
+		new Thread(() -> {
+			
+			if (pasti.getTank().getIsEmpty()) {
+				pasti.getTank().empty();
+			} 
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			setExecutionState(ExecutionState.COMPLETE.getValue());
+		}).start();
+		
+
+	}
+	*/
 	@Override
 	public void onVariableChange(String varName, Object newValue) {
 		// TODO Auto-generated method stub

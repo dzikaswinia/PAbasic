@@ -1,6 +1,8 @@
 package staciwa.projektarbeit;
 
 import java.util.Map;
+import java.util.Scanner;
+
 import org.eclipse.basyx.aas.manager.ConnectedAssetAdministrationShellManager;
 import org.eclipse.basyx.aas.metamodel.connected.ConnectedAssetAdministrationShell;
 import org.eclipse.basyx.aas.metamodel.map.descriptor.ModelUrn;
@@ -21,16 +23,20 @@ public class App_remote
 {
 	
 	//GLOBALS: a network address and port of the device on which the AAS is running.
-	public static String AAS_IP = "192.168.2.3";
+	//public static String AAS_IP = "192.168.2.3";
 	public static int CC_PORT = 4001;
 	public static int AAS_PORT = 4000;
 	
 	
     public static void main( String[] args ) throws Exception
     {
-     
+    	
+    	Scanner scanner = new Scanner(System.in);
+    	System.out.println("AAS IP: 192.168.2.");
+    	String aas_ip = "192.168.2." + scanner.nextLine();	//TODO falsche input abfangen
+    	
         //Connecting to AAS
-    	IAASRegistryService registry = new AASRegistryProxy("http://" + App_remote.AAS_IP + ":" 
+    	IAASRegistryService registry = new AASRegistryProxy("http://" + aas_ip + ":" 
     			+ App_local.AAS_PORT + "/registry");
         IConnectorProvider connectorProvider = new HTTPConnectorProvider();
 		ConnectedAssetAdministrationShellManager manager = new ConnectedAssetAdministrationShellManager(registry,
@@ -42,13 +48,13 @@ public class App_remote
 		// Retrieving the tank's submodel.
 		Map<String, ISubModel> submodels = connectedAAS.getSubModels();
 		ISubModel connectedTankSM = submodels.get("tank");
-		System.out.print("Short ID: " + connectedTankSM.getIdShort());
+		System.out.print("AAS with short ID \"" + connectedTankSM.getIdShort() + "\" has been retrieved.");
 		
 		// Retrieving the properties of the submodel.
 		Map<String, ISubmodelElement> properties = connectedTankSM.getSubmodelElements(); 
 		IProperty maxCapPro = (IProperty) properties.get("maxCapacity");
 		Double maxCap = (Double) maxCapPro.get();
-		System.out.print("\nCapacity: " + maxCap);
+		System.out.print("\nThe maximal capacity of the " + connectedTankSM.getIdShort() + ": " + maxCap);
 		IProperty currentLiquidLevel = (IProperty) properties.get("currentLiquidLevel");
 		Double curLiqLev = (Double) currentLiquidLevel.get();
 		System.out.println("\nCurrent liquid level: " + curLiqLev);
@@ -57,6 +63,7 @@ public class App_remote
 		Map<String, IOperation> operations = connectedTankSM.getOperations();
 		IOperation tankOperation = operations.get("fillTank");
 		tankOperation.invoke();
+		
 		Thread.sleep(5000);
 		
 		curLiqLev = (Double) currentLiquidLevel.get();

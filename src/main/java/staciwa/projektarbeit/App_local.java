@@ -41,10 +41,10 @@ import org.eclipse.basyx.vab.protocol.http.server.VABHTTPInterface;
 public class App_local 
 {
 	//GLOBALS: a network address and port of the device on which the AAS is running.
-	public static String AAS_IP = "192.168.2.107";		//TODO von User abfragen?
+	public static String AAS_IP = "147.172.178.150";		//TODO von User abfragen?
 	public static int CC_PORT = 4001;
 	public static int AAS_PORT = 4000;
-	public static String CC_IP = "";
+	public static String CC_IP = "147.172.178.150";
 	
     public static void main( String[] args ) throws Exception
     {

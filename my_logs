@@ -1,10 +1,39 @@
+9.10.2020
+
+DONE: AAS läuft auf AXC 3152 und kann von meinem Rechner angefragt werden.
+ 
+ZIEL:
+- Überlegen die Klassen-Struktur von Pasti
+- Alle Klassen erstellen
+
+3.10.2020
+
+ZIEL:
+- versuche mit Uni-Rechner sich zu verbinden (brauche ich da credentials?) x
+- Text-Struktur anlegen x
+
+
+1.10.2020
+
+ZIEL:
+- email an Holger über docker auf PCLNext x
+
 
 27.09.2020
 
 ZIEL:
-- schöne Ausgabe auf App_remote
-- testen mit Jar
-- erstellen von Docker Image
+- schöne Ausgabe auf App_remote 
+- testen mit Jar		x
+- erstellen von Docker Image	x
+
+DONE:
+Container mit PAbasic (main: App_remote) on Wildschein:
+	~/IT_Project/docker/
+	image name: remote0927
+
+Container mit PAbasic (main: App_local) on Raspberry:
+	~/docker/
+	image name: aas_1
 
 
 26.09.2020

@@ -8,7 +8,7 @@
   <artifactId>projektarbeit</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>projektarbeit</name>
+  <name>projektarbeit_local</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

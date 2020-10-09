@@ -23,7 +23,7 @@ public class App_remote
 {
 	
 	//GLOBALS: a network address and port of the device on which the AAS is running.
-	public static String AAS_IP = "192.168.2.107";
+	public static String AAS_IP = "147.172.178.150";
 	public static int CC_PORT = 4001;
 	public static int AAS_PORT = 4000;
 	

@@ -154,36 +154,6 @@ public class App_local
     	heaterSubModel.setIdShort("heater");
     	heaterSubModel.setIdentification(IdentifierType.CUSTOM, "heater");
     	
-    	// Function 
-    	Function<Object[], Object> heatLiquidInvokable = (params) -> {
-		
-			// Connect to the control component
-			VABElementProxy proxy = new VABElementProxy("", new JSONConnector(new BaSyxConnector(App_local.AAS_IP, App_local.CC_PORT)));
- 
-			// Select the operation from the control component
-			proxy.setModelPropertyValue("status/opMode", PasteurizatorControlComponent.OPMODE_HEAT);
- 
-			// Start the control component operation asynchronous
-			proxy.invokeOperation("/operations/service/start");
- 
-			// Wait until the operation is completed
-			while (!proxy.getModelPropertyValue("status/exState").equals(ExecutionState.COMPLETE.getValue())) {
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-				}
-			}
- 
-			proxy.invokeOperation("operations/service/reset");
-			return null;
-		};
-		
-		// Creating the Operation
-		Operation operationHeatLiquid = new Operation();
-		operationHeatLiquid.setIdShort("heatLiquid");
-		operationHeatLiquid.setInvocable(heatLiquidInvokable);
-		heaterSubModel.addSubModelElement(operationHeatLiquid);
-    	
     	/**
     	 * AAS
     	 */
@@ -225,7 +195,8 @@ public class App_local
 		aasDescriptor.addSubmodelDescriptor(new SubmodelDescriptor(tankSubModel, 
 				"http://" + App_local.AAS_IP + ":" + App_local.AAS_PORT + "/pasti/aas/submodels/tank/submodel"));
 		
-		//TODO die Registrierung ist essenziell sonst kann der Proxy den Submodel nicht finden (NullPointerExeption).
+		//TODO die Registrierung ist essenziell sonst kann der Proxy den Submodel nicht finden (NullPointerExeption)
+		
 		aasDescriptor.addSubmodelDescriptor(new SubmodelDescriptor(heaterSubModel, 
 				"http://" + App_local.AAS_IP + ":" + App_local.AAS_PORT + "/pasti/aas/submodels/heater/submodel"));
 		registry.register(aasDescriptor);

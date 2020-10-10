@@ -14,10 +14,15 @@ public class Heater {
 		return maxTemp;
 	}
 	
+	public void tankIsFull() {
+		heat();
+	}
+	
 	public void heat() {
+		System.out.println("Heater:		The method heat() has been activated.");
 		
 		if (currentTemp <= (maxTemp - 10)) {
-			System.out.println("Heater is On.");
+			
 			isOn = true;
 			currentTemp += 10.0;
 		} else {

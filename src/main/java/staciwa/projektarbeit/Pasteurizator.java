@@ -8,7 +8,7 @@ public class Pasteurizator {
 	
 	public Pasteurizator(String name) {
 		this.name = name;
-		this.tank = new Tank();
+		this.tank = new Tank(this);
 		this.heater = new Heater();
 	}
 	

@@ -57,31 +57,25 @@ public class App_remote
 		String shortid = connectedHeaterSM.getIdShort();
 		System.out.print("\nSubmodel \"Heater\" with short ID \"" + connectedHeaterSM.getIdShort() + "\" has been retrieved.");
 		
-		// Retrieving the properties of the submodel.
-		Map<String, ISubmodelElement> properties = connectedTankSM.getSubmodelElements(); 
-		IProperty maxCapPro = (IProperty) properties.get("maxCapacity");
+		// Retrieving the properties of the submodel tank.
+		Map<String, ISubmodelElement> propertiesTank = connectedTankSM.getSubmodelElements(); 
+		IProperty maxCapPro = (IProperty) propertiesTank.get("maxCapacity");
 		Double maxCap = (Double) maxCapPro.get();
 		System.out.print("\nThe maximal capacity of the " + connectedTankSM.getIdShort() + ": " + maxCap);
-		IProperty currentLiquidLevel = (IProperty) properties.get("currentLiquidLevel");
+		IProperty currentLiquidLevel = (IProperty) propertiesTank.get("currentLiquidLevel");
 		Double curLiqLev = (Double) currentLiquidLevel.get();
 		System.out.println("\nCurrent liquid level: " + curLiqLev);
-		
-		// Filling the tank.
-		Map<String, IOperation> operationsTank = connectedTankSM.getOperations();
-		IOperation tankOperation = operationsTank.get("fillTank");
-		tankOperation.invoke();
-		
+				
 		Thread.sleep(3000);
 		
 		curLiqLev = (Double) currentLiquidLevel.get();
 		System.out.println("\nCurrent liquid level: " + curLiqLev + "\n");
 		
-		// Heat liquid.
-		Map<String, IOperation> operationsHeater = connectedHeaterSM.getOperations();
-		IOperation heatLiquidOp = operationsHeater.get("heatLiquid");
-		heatLiquidOp.invoke();
-		
-		
-    }
+		// Retrieving the properties of the submodel tank.
+		Map<String, ISubmodelElement> propertiesHeater = connectedHeaterSM.getSubmodelElements(); 
+		IProperty currentTemp = (IProperty) propertiesHeater.get("currentTemp");
+		Double currentLiquidTemp = (Double) currentTemp.get();
+		System.out.println("Current temperatur of the liquid: " + currentLiquidTemp);
+    } 
     
 }

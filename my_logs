@@ -1,19 +1,22 @@
 10.10.2020
 
-!!! Es scheint dass Basyx hat ein Fehler. Die Methode getIdShort() gibt immer 
+DONE:
+Es scheint dass Basyx hat ein Fehler. Die Methode getIdShort() gibt immer 
 nur ein ID Short zurück, obwohl es gibt mehrere Submodels mit unterschiedlichen
  Id Shorts.
+Problem mit aufrufen von Operationen von zweiten Submodel
 
-!!! Problem mit aufrufen von Operationen von zweiten Submodel
+DONE:
+# Der zweite Submodel war nicht registriert in aasDescriptor, daher gab es
+# Null Pointer Exception.
 
-DONE: Der zweite Submodel war nicht registriert in aasDescriptor, daher gab es
-Null Pointer Exception.
-
+# Bei Aufruf einer Operation muss man auf die Mode achten: 
+# EXECUTE -> COMPLETE -> IDLE
 
 ZIEL:
 - Implementiere Funktionen "Milch erhitzen" und "Tank leeren"
 
-
+PROBLEM: Der Heater "sieht" nicht, dass der Tank voll ist.
 
 
 9.10.2020

@@ -41,10 +41,12 @@ import org.eclipse.basyx.vab.protocol.http.server.VABHTTPInterface;
 public class App_local 
 {
 	//GLOBALS: a network address and port of the device on which the AAS is running.
-	public static String AAS_IP = "147.172.178.150";		//TODO von User abfragen?
+	//public static String AAS_IP = "147.172.178.150";		//TODO von User abfragen?
+	public static String AAS_IP = "192.168.2.3";
 	public static int CC_PORT = 4001;
 	public static int AAS_PORT = 4000;
-	public static String CC_IP = "147.172.178.150";
+	//public static String CC_IP = "147.172.178.150";
+	public static String CC_IP = "192.168.2.3";
 	
     public static void main( String[] args ) throws Exception
     {
@@ -85,7 +87,6 @@ public class App_local
     	//dynamic property: current liquid level in the tank. 
     	Property currentLiquidLevel = new Property();
     	currentLiquidLevel.setIdShort("currentLiquidLevel");
-    	    	
     	currentLiquidLevel.set(VABLambdaProviderHelper.createSimple(() -> {
     		return pasti.getTank().getCurrentLiquidLevel(); 
     	}, null), PropertyValueTypeDef.Double);
@@ -119,14 +120,69 @@ public class App_local
 		};
 		
 		// Creating the Operation
-		Operation operation = new Operation();
-		operation.setIdShort("fillTank");
-		operation.setInvocable(tankFillInvokable);
-		tankSubModel.addSubModelElement(operation);
+		Operation operationFillTank = new Operation();
+		operationFillTank.setIdShort("fillTank");
+		operationFillTank.setInvocable(tankFillInvokable);
+		tankSubModel.addSubModelElement(operationFillTank);
     	
 		// Setting identifiers. 
-    	tankSubModel.setIdShort("tank");
+    	tankSubModel.setIdShort("tank_id");
     	tankSubModel.setIdentification(IdentifierType.CUSTOM, "tank");
+    	
+    	
+    	/**Submodel: Heater
+    	 * 
+    	 */
+    	
+    	SubModel heaterSubModel = new SubModel();
+    	
+    	// Properties
+    	Property maxTemp = new Property();
+    	maxTemp.setIdShort("maxTemp");
+    	maxTemp.set(VABLambdaProviderHelper.createSimple(() -> {
+    		return pasti.getHeater().getMaxTemp(); 
+    	}, null), PropertyValueTypeDef.Double);
+    	
+    	Property currentTemp = new Property();
+    	currentTemp.setIdShort("currentTemp");
+    	currentTemp.set(VABLambdaProviderHelper.createSimple(() -> {
+    		return pasti.getHeater().getCurrentTemp(); 
+    	}, null), PropertyValueTypeDef.Double);
+    	
+    	heaterSubModel.addSubModelElement(maxTemp);
+    	heaterSubModel.addSubModelElement(currentTemp);
+    	heaterSubModel.setIdShort("heater");
+    	heaterSubModel.setIdentification(IdentifierType.CUSTOM, "heater");
+    	
+    	// Function 
+    	Function<Object[], Object> heatLiquidInvokable = (params) -> {
+		
+			// Connect to the control component
+			VABElementProxy proxy = new VABElementProxy("", new JSONConnector(new BaSyxConnector(App_local.AAS_IP, App_local.CC_PORT)));
+ 
+			// Select the operation from the control component
+			proxy.setModelPropertyValue("status/opMode", PasteurizatorControlComponent.OPMODE_HEAT);
+ 
+			// Start the control component operation asynchronous
+			proxy.invokeOperation("/operations/service/start");
+ 
+			// Wait until the operation is completed
+			while (!proxy.getModelPropertyValue("status/exState").equals(ExecutionState.COMPLETE.getValue())) {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+				}
+			}
+ 
+			proxy.invokeOperation("operations/service/reset");
+			return null;
+		};
+		
+		// Creating the Operation
+		Operation operationHeatLiquid = new Operation();
+		operationHeatLiquid.setIdShort("heatLiquid");
+		operationHeatLiquid.setInvocable(heatLiquidInvokable);
+		heaterSubModel.addSubModelElement(operationHeatLiquid);
     	
     	/**
     	 * AAS
@@ -147,9 +203,12 @@ public class App_local
     	//Wrapping submodel in IModelProvider
     	AASModelProvider aasProvider = new AASModelProvider(aas);
     	SubModelProvider tankSMProvider = new SubModelProvider(tankSubModel);
+    	SubModelProvider heaterSMProvider = new SubModelProvider(heaterSubModel);
     	VABMultiSubmodelProvider fullProvider = new VABMultiSubmodelProvider ();
     	fullProvider.setAssetAdministrationShell(aasProvider);
+    	fullProvider.addSubmodel("heater",heaterSMProvider);
     	fullProvider.addSubmodel("tank",tankSMProvider);
+    	
     	
     	HttpServlet aasServlet = new VABHTTPInterface<IModelProvider>(fullProvider);
     	
@@ -165,6 +224,10 @@ public class App_local
 				+ App_local.AAS_PORT + "/pasti/aas");
 		aasDescriptor.addSubmodelDescriptor(new SubmodelDescriptor(tankSubModel, 
 				"http://" + App_local.AAS_IP + ":" + App_local.AAS_PORT + "/pasti/aas/submodels/tank/submodel"));
+		
+		//TODO die Registrierung ist essenziell sonst kann der Proxy den Submodel nicht finden (NullPointerExeption).
+		aasDescriptor.addSubmodelDescriptor(new SubmodelDescriptor(heaterSubModel, 
+				"http://" + App_local.AAS_IP + ":" + App_local.AAS_PORT + "/pasti/aas/submodels/heater/submodel"));
 		registry.register(aasDescriptor);
 		
 		// Deploy the AAS on a HTTP server

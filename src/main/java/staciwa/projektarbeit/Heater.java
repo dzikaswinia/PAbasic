@@ -10,6 +10,10 @@ public class Heater {
 		return currentTemp;
 	}
 	
+	public double getMaxTemp() {
+		return maxTemp;
+	}
+	
 	public void heat() {
 		
 		if (currentTemp <= (maxTemp - 10)) {

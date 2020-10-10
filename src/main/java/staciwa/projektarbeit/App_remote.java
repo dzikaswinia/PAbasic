@@ -23,7 +23,8 @@ public class App_remote
 {
 	
 	//GLOBALS: a network address and port of the device on which the AAS is running.
-	public static String AAS_IP = "147.172.178.150";
+	//public static String AAS_IP = "147.172.178.150";
+	public static String AAS_IP = "192.168.2.3";
 	public static int CC_PORT = 4001;
 	public static int AAS_PORT = 4000;
 	
@@ -47,8 +48,14 @@ public class App_remote
 		ConnectedAssetAdministrationShell connectedAAS = manager.retrieveAAS(aasURN);
 		// Retrieving the tank's submodel.
 		Map<String, ISubModel> submodels = connectedAAS.getSubModels();
-		ISubModel connectedTankSM = submodels.get("tank");
-		System.out.print("AAS with short ID \"" + connectedTankSM.getIdShort() + "\" has been retrieved.");
+		ISubModel connectedTankSM = submodels.get("tank_id");
+		System.out.println("Submodels: " + submodels);
+		System.out.print("Submodel \"Tank\" with short ID \"" + connectedTankSM.getIdShort() + "\" has been retrieved.");
+		
+		//Heating the liquid
+		ISubModel connectedHeaterSM = submodels.get("heater");
+		String shortid = connectedHeaterSM.getIdShort();
+		System.out.print("\nSubmodel \"Heater\" with short ID \"" + connectedHeaterSM.getIdShort() + "\" has been retrieved.");
 		
 		// Retrieving the properties of the submodel.
 		Map<String, ISubmodelElement> properties = connectedTankSM.getSubmodelElements(); 
@@ -60,14 +67,20 @@ public class App_remote
 		System.out.println("\nCurrent liquid level: " + curLiqLev);
 		
 		// Filling the tank.
-		Map<String, IOperation> operations = connectedTankSM.getOperations();
-		IOperation tankOperation = operations.get("fillTank");
+		Map<String, IOperation> operationsTank = connectedTankSM.getOperations();
+		IOperation tankOperation = operationsTank.get("fillTank");
 		tankOperation.invoke();
 		
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 		
 		curLiqLev = (Double) currentLiquidLevel.get();
-		System.out.println("\nCurrent liquid level: " + curLiqLev);
+		System.out.println("\nCurrent liquid level: " + curLiqLev + "\n");
+		
+		// Heat liquid.
+		Map<String, IOperation> operationsHeater = connectedHeaterSM.getOperations();
+		IOperation heatLiquidOp = operationsHeater.get("heatLiquid");
+		heatLiquidOp.invoke();
+		
 		
     }
     

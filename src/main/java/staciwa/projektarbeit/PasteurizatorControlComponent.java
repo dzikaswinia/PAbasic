@@ -11,6 +11,7 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 	public static final String OPMODE_BASIC = "BSTATE";
 	public static final String OPMODE_FILL = "FILL";
 	//public static final String OPMODE_EMPTY = "EMPTY";
+	public static final String OPMODE_HEAT = "HEAT";
 	
 	private Pasteurizator pasti;
 	
@@ -23,12 +24,20 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 	@Override
 	public void onChangedExecutionState(ExecutionState newExecutionState) {
 		System.out.println("CC:	new execution state: " + newExecutionState ); //TODO
-		// TODO das verstehe ich nicht
 		if (newExecutionState == ExecutionState.EXECUTE) {
-			if (this.getOperationMode().equals(OPMODE_FILL)) {
-				fillTank();
-			} else {
-				setExecutionState(ExecutionState.COMPLETE.getValue());
+			String opMode = this.getOperationMode();
+			switch(opMode) {
+				case "FILL":
+					fillTank();
+					break;
+				case "EMPTY":
+					//TODO
+					break;
+				case "HEAT":
+					heatLiquid();
+					break;
+				default:
+					setExecutionState(ExecutionState.COMPLETE.getValue());
 			}		
 		}
 	}
@@ -71,6 +80,25 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 
 	}
 	*/
+	
+	protected void heatLiquid() {
+		
+		new Thread(() -> {
+			//TODO implementiere die Methode
+			System.out.println("Heater is working.");
+			/*
+			if(pasti.getTank().getIsFull()) {
+				pasti.getHeater().heat();
+				System.out.println("Heater is working.");
+			} else {
+				System.out.println("Tank is not full. The heater cannot be activated.");
+			}
+			*/			
+		}).start();
+	}
+	
+	
+	
 	@Override
 	public void onVariableChange(String varName, Object newValue) {
 		// TODO Auto-generated method stub

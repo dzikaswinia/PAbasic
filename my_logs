@@ -1,10 +1,31 @@
+10.10.2020
+
+!!! Es scheint dass Basyx hat ein Fehler. Die Methode getIdShort() gibt immer 
+nur ein ID Short zurück, obwohl es gibt mehrere Submodels mit unterschiedlichen
+ Id Shorts.
+
+!!! Problem mit aufrufen von Operationen von zweiten Submodel
+
+DONE: Der zweite Submodel war nicht registriert in aasDescriptor, daher gab es
+Null Pointer Exception.
+
+
+ZIEL:
+- Implementiere Funktionen "Milch erhitzen" und "Tank leeren"
+
+
+
+
 9.10.2020
 
 DONE: AAS läuft auf AXC 3152 und kann von meinem Rechner angefragt werden.
  
 ZIEL:
-- Überlegen die Klassen-Struktur von Pasti
-- Alle Klassen erstellen
+- Überlegen die Klassen-Struktur von Pasti x
+- Alle Klassen erstellen x
+
+PROBLEM: Ich habe zwei Submodels (Tank und Heater) wenn ich in App_remote die 
+id short abfrage bekommen ich in beiden Fällen "tank". Why?
 
 3.10.2020
 

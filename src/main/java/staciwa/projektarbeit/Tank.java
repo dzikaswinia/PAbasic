@@ -46,13 +46,22 @@ public class Tank {
 	public void setIsFull(boolean state) {
 		this.isFull = state;
 	}
-	
+	/*
 	public boolean getIsEmpty() {
 		boolean result = false;
 		if (currentLiquidLevel == 0.0) {
 			result = true;
 		}
 		return result;
+	}
+	*/
+	
+	public boolean getIsEmpty() {
+		return this.isEmpty;
+	}
+	
+	public void setIsEmpty(boolean state) {
+		this.isEmpty = state;
 	}
 	
 	public void fill() {
@@ -72,7 +81,8 @@ public class Tank {
 	}
 	
 	public void empty() {
-		System.out.println("Tank: methode empty()");
+		System.out.println("Tank: The empty() methode has been invoked");
+		isFull = false;
 		while(!(isEmpty)) {
 			System.out.println("Tank: Current liquid level - " + currentLiquidLevel);
 			if (currentLiquidLevel > 0) {

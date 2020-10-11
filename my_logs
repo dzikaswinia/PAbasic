@@ -3,6 +3,7 @@
 ZIEL: Implementiere die Methode heat() x
 
 DONE: Methode empty() funktioniert.
+      Die FlüssigkeitTemp senkt mit der Zeit.
 
 # Metadaten über z.B. Control Componente sind nicht für die App_remote 
 # zugänglich.

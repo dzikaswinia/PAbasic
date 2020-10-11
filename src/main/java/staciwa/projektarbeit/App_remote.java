@@ -85,6 +85,9 @@ public class App_remote
 		IOperation emptyTank = operationsTank.get("emptyTank");
 		emptyTank.invoke();
 		
+		curLiqLev = (Double) currentLiquidLevel.get();
+		System.out.println("\nCurrent liquid level: " + curLiqLev + "\n");
+		
     } 
     
 }

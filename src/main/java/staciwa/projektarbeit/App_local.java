@@ -147,11 +147,11 @@ public class App_local
 		Operation operationFillTank = new Operation();
 		Operation operationEmptyTank = new Operation();
 		operationFillTank.setIdShort("fillTank");
-		operationFillTank.setIdShort("emptyTank");
+		operationEmptyTank.setIdShort("emptyTank");
 		operationFillTank.setInvocable(tankFillInvokable);
 		operationEmptyTank.setInvocable(tankEmptyInvokable);
 		tankSubModel.addSubModelElement(operationFillTank);
-		//tankSubModel.addSubModelElement(operationEmptyTank);
+		tankSubModel.addSubModelElement(operationEmptyTank);
     	
 		// Setting identifiers. 
     	tankSubModel.setIdShort("tank_id");

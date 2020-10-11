@@ -8,6 +8,7 @@ public class Tank {
 	private double currentLiquidLevel = 0.0;
 	private double changeRate = 10;
 	private boolean isFull = false;
+	private boolean isEmpty = true;
 	
 	public Tank(Pasteurizator pasti) {
 		this.pasti = pasti;
@@ -56,6 +57,7 @@ public class Tank {
 	
 	public void fill() {
 		System.out.println("Tank: The fill() methode has been invoked.");
+		isEmpty = false;
 		//boolean tankNotFull = true;
 		while(!(isFull)) {
 			System.out.println("Tank: Current liquid level - " + currentLiquidLevel);
@@ -70,13 +72,12 @@ public class Tank {
 	}
 	
 	public void empty() {
-		boolean tankNotEmpty = true;
-		while(tankNotEmpty) {
+		while(!(isEmpty)) {
 			System.out.println("Tank: Current liquid level - " + currentLiquidLevel);
 			if (currentLiquidLevel > 0) {
 				currentLiquidLevel -= changeRate;
 			} else {
-				tankNotEmpty = false;
+				isEmpty = true;
 				System.out.println("Tank: Tank is empty.");
 			}
 		}

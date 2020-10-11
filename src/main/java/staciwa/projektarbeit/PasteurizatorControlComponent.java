@@ -66,7 +66,7 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 		
 		new Thread(() -> {
 			System.out.println("CC: method emptyTank() has been invoked.");
-			if (pasti.getTank().getIsEmpty()) {
+			if (!(pasti.getTank().getIsEmpty())) {
 				pasti.getTank().empty();
 			} 
 			try {

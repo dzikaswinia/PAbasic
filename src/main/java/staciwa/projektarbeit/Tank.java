@@ -72,6 +72,7 @@ public class Tank {
 	}
 	
 	public void empty() {
+		System.out.println("Tank: methode empty()");
 		while(!(isEmpty)) {
 			System.out.println("Tank: Current liquid level - " + currentLiquidLevel);
 			if (currentLiquidLevel > 0) {

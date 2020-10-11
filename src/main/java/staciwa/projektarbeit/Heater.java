@@ -10,17 +10,22 @@ public class Heater {
 	private double maxTemp = 90.0;
 	private boolean isOn = false;
 	private double currentTemp = 20.0;
-	private double enviromentTemp = 20.0;
+	private double environmentTemp = 20.0;
 	private LocalTime lastTempCall = LocalTime.now();
 	
 	public double getCurrentTemp() {
+		
+		// Miau
+		
+		
 		LocalTime now = LocalTime.now();
 		Long timeDiff = Duration.between(lastTempCall,now).getSeconds();
-		// TODO
+		
+		// simulate cooling of milk with a linear function (simple but not realistic)
 	 	double tempDiff = timeDiff.doubleValue() * 0.1;
 	 	double newTemp = currentTemp - tempDiff;
-	 	if (newTemp < currentTemp) {
-	 		currentTemp = enviromentTemp;
+	 	if (newTemp < environmentTemp) {
+	 		currentTemp = environmentTemp;
 	 	} else {
 	 		currentTemp = newTemp;
 	 	}

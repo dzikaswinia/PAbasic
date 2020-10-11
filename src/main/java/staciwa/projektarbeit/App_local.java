@@ -88,7 +88,9 @@ public class App_local
     	Property currentLiquidLevel = new Property();
     	currentLiquidLevel.setIdShort("currentLiquidLevel");
     	currentLiquidLevel.set(VABLambdaProviderHelper.createSimple(() -> {
-    		return pasti.getTank().getCurrentLiquidLevel(); 
+    		double returnValue = pasti.getTank().getCurrentLiquidLevel();  
+    		System.out.println("\nApp_local: currentLiquidLevel angefragt: " + returnValue);
+    		return returnValue;
     	}, null), PropertyValueTypeDef.Double);
     	   	
     	
@@ -174,7 +176,9 @@ public class App_local
     	Property currentTemp = new Property();
     	currentTemp.setIdShort("currentTemp");
     	currentTemp.set(VABLambdaProviderHelper.createSimple(() -> {
-    		return pasti.getHeater().getCurrentTemp(); 
+    		double returnValue = pasti.getHeater().getCurrentTemp(); 
+    		System.out.println("App_local: currentTemp angefragt " + returnValue);
+    		return returnValue;
     	}, null), PropertyValueTypeDef.Double);
     	
     	heaterSubModel.addSubModelElement(maxTemp);

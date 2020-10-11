@@ -65,7 +65,11 @@ public class App_remote
 		IProperty currentLiquidLevel = (IProperty) propertiesTank.get("currentLiquidLevel");
 		Double curLiqLev = (Double) currentLiquidLevel.get();
 		System.out.println("\nCurrent liquid level: " + curLiqLev);
-				
+		
+		Map<String, IOperation> operationsTank = connectedTankSM.getOperations();
+		IOperation tankOperation = operationsTank.get("fillTank");
+		tankOperation.invoke();
+			
 		Thread.sleep(3000);
 		
 		curLiqLev = (Double) currentLiquidLevel.get();

@@ -88,6 +88,12 @@ public class App_remote
 		curLiqLev = (Double) currentLiquidLevel.get();
 		System.out.println("\nCurrent liquid level: " + curLiqLev + "\n");
 		
+		//cooling down for 5s
+		Thread.sleep(5000);
+		
+		currentLiquidTemp = (Double) currentTemp.get();
+		System.out.println("Current temperatur of the liquid: " + currentLiquidTemp);
+		
     } 
     
 }

@@ -1,12 +1,31 @@
 package staciwa.projektarbeit;
 
+import java.time.Duration;
+import java.time.LocalTime;
+
+
+
 public class Heater {
 	
 	private double maxTemp = 90.0;
 	private boolean isOn = false;
-	private double currentTemp = 0.0;
+	private double currentTemp = 20.0;
+	private double enviromentTemp = 20.0;
+	private LocalTime lastTempCall = LocalTime.now();
 	
 	public double getCurrentTemp() {
+		LocalTime now = LocalTime.now();
+		Long timeDiff = Duration.between(lastTempCall,now).getSeconds();
+		// TODO
+	 	double tempDiff = timeDiff.doubleValue() * 0.1;
+	 	double newTemp = currentTemp - tempDiff;
+	 	if (newTemp < currentTemp) {
+	 		currentTemp = enviromentTemp;
+	 	} else {
+	 		currentTemp = newTemp;
+	 	}
+	 	this.lastTempCall = now;
+		
 		return currentTemp;
 	}
 	

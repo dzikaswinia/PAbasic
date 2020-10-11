@@ -1,6 +1,11 @@
 11.10.2020
 
-ZIEL: Implementiere die Methode heat()
+ZIEL: Implementiere die Methode heat() x
+
+DONE: Methode empty() funktioniert.
+
+# Metadaten über z.B. Control Componente sind nicht für die App_remote 
+# zugänglich.
 
 10.10.2020
 

@@ -43,12 +43,13 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 	protected void fillTank() {
 		
 		new Thread(() -> {
-			System.out.println("\nLALALCC: the tank is full - " + pasti.getTank().getIsFull());
+			System.out.println("\nCC: the tank is full - " + pasti.getTank().getIsFull());
 			if (!(pasti.getTank().getIsFull())) {
 				pasti.getTank().fill();
 			} else {
 				pasti.getTank().setIsFull(true);
-				System.out.println("\nLALALelseCC: the tank is full - " + pasti.getTank().getIsFull());
+				System.out.println("\nCC: the tank is full - " + pasti.getTank().getIsFull());
+				System.out.println("\nCC: the current temperatur of the liquid is " + pasti.getHeater().getCurrentTemp());
 			}
 			try {
 				Thread.sleep(100);

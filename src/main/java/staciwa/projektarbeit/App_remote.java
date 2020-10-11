@@ -80,6 +80,11 @@ public class App_remote
 		IProperty currentTemp = (IProperty) propertiesHeater.get("currentTemp");
 		Double currentLiquidTemp = (Double) currentTemp.get();
 		System.out.println("Current temperatur of the liquid: " + currentLiquidTemp);
+		
+		//Empty tank
+		IOperation emptyTank = operationsTank.get("emptyTank");
+		emptyTank.invoke();
+		
     } 
     
 }

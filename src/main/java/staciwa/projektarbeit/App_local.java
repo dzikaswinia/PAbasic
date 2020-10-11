@@ -119,11 +119,39 @@ public class App_local
 			return null;
 		};
 		
+		// Function 
+    	Function<Object[], Object> tankEmptyInvokable = (params) -> {
+		
+			// Connect to the control component
+			VABElementProxy proxy = new VABElementProxy("", new JSONConnector(new BaSyxConnector(App_local.AAS_IP, App_local.CC_PORT)));
+ 
+			// Select the operation from the control component
+			proxy.setModelPropertyValue("status/opMode", PasteurizatorControlComponent.OPMODE_EMPTY);
+ 
+			// Start the control component operation asynchronous
+			proxy.invokeOperation("/operations/service/start");
+ 
+			// Wait until the operation is completed
+			while (!proxy.getModelPropertyValue("status/exState").equals(ExecutionState.COMPLETE.getValue())) {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+				}
+			}
+ 
+			proxy.invokeOperation("operations/service/reset");
+			return null;
+		};
+		
 		// Creating the Operation
 		Operation operationFillTank = new Operation();
+		Operation operationEmptyTank = new Operation();
 		operationFillTank.setIdShort("fillTank");
+		operationFillTank.setIdShort("emptyTank");
 		operationFillTank.setInvocable(tankFillInvokable);
+		operationEmptyTank.setInvocable(tankEmptyInvokable);
 		tankSubModel.addSubModelElement(operationFillTank);
+		tankSubModel.addSubModelElement(operationEmptyTank);
     	
 		// Setting identifiers. 
     	tankSubModel.setIdShort("tank_id");

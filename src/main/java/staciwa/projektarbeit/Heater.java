@@ -19,15 +19,18 @@ public class Heater {
 	}
 	
 	public void heat() {
-		System.out.println("Heater:		The method heat() has been activated.");
-		
-		if (currentTemp <= (maxTemp - 10)) {
-			
-			isOn = true;
-			currentTemp += 10.0;
-		} else {
-			System.out.println("Maximal temperatur has been reached.");
-			isOn = true;
+		System.out.println("Heater:	The method heat() has been activated.");
+		while(currentTemp != maxTemp) {
+			System.out.println("Heater:	current temperature - " + currentTemp);
+			if (currentTemp <= (maxTemp - 10)) {
+				isOn = true;
+				currentTemp += 10.0;
+			} else {
+				//TODO vielleicht brauche ich isOn gar nicht
+				System.out.println("Maximal temperatur has been reached.");
+				isOn = false;
+			}
 		}
 	}
+	
 }

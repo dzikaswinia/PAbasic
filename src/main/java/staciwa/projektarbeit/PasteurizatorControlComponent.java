@@ -10,7 +10,7 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 
 	public static final String OPMODE_BASIC = "BSTATE";
 	public static final String OPMODE_FILL = "FILL";
-	//public static final String OPMODE_EMPTY = "EMPTY";
+	public static final String OPMODE_EMPTY = "EMPTY";
 	
 	private Pasteurizator pasti;
 	
@@ -30,7 +30,7 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 					fillTank();
 					break;
 				case "EMPTY":
-					//TODO
+					emptyTank();
 					break;
 				default:
 					setExecutionState(ExecutionState.COMPLETE.getValue());
@@ -61,11 +61,11 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 		
 
 	}
-	/*
+	
 	protected void emptyTank() {
 		
 		new Thread(() -> {
-			
+			System.out.println("CC: method emptyTank() has been invoked.");
 			if (pasti.getTank().getIsEmpty()) {
 				pasti.getTank().empty();
 			} 
@@ -77,9 +77,8 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 			setExecutionState(ExecutionState.COMPLETE.getValue());
 		}).start();
 		
-
 	}
-	*/
+	
 	
 	@Override
 	public void onVariableChange(String varName, Object newValue) {

@@ -5,6 +5,8 @@ TODO:
 - UML Diagramme korriegieren
 - Übersicht App_local und App_remote erstellen
 
+# die Registrierung von Submodel in AASDecriptior ist essenziell sonst kann der Proxy den Submodel nicht 
+# finden (NullPointerExeption).
 
 11.10.2020
 

@@ -38,7 +38,7 @@ public class Client {
 				connectorProvider);
 					
 		// The ID of the Pasteurizator AAS
-		ModelUrn aasURN = new ModelUrn("de.FHG", "devices.es.iese", "AAS", "1.0", "1", "oven01", "001");	//TODO change name
+		ModelUrn aasURN = new ModelUrn("", "", "AAS", "", "", "pasteurizator", "");
 		ConnectedAssetAdministrationShell connectedAAS = manager.retrieveAAS(aasURN);
 		// Retrieving the tank's submodel.
 		Map<String, ISubModel> submodels = connectedAAS.getSubModels();

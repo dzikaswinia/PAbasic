@@ -40,26 +40,17 @@ import org.eclipse.basyx.vab.protocol.http.server.VABHTTPInterface;
  * **/
 public class App_local 
 {
-	//GLOBALS: a network address and port of the device on which the AAS is running.
-	//public static String AAS_IP = "147.172.178.150";		//TODO von User abfragen?
+	//Address and port of the device, on which the AAS is running.
 	public static String AAS_IP = "192.168.2.3";
-	public static int CC_PORT = 4001;
 	public static int AAS_PORT = 4000;
-	//public static String CC_IP = "147.172.178.150";
+	//Address and port of the device, on which the ControlComponent is running.
 	public static String CC_IP = "192.168.2.3";
+	public static int CC_PORT = 4001;
 	
     public static void main( String[] args ) throws Exception
     {
         
     	System.out.println("Welcome to Pasteurizator's AAS");
-    	/*
-    	//AAS IP - user input.
-    	Scanner scanner = new Scanner(System.in);
-    	System.out.println("AAS IP: 192.168.2.");
-    	String aas_ip = "192.168.2." + scanner.nextLine();	//TODO falsche input abfangen
-    	//System.out.println("User Input: " + aas_ip);
-    	 * 
-    	 */
         Pasteurizator pasti = new Pasteurizator();
         startMyControlComponent(pasti);
         startMyAAS(pasti);
@@ -72,19 +63,17 @@ public class App_local
      */
     public static void startMyAAS(Pasteurizator pasti) {
     	
-    	/**Submodel: Tank
-    	 * 
-    	 */
+    	// SUBMODEL TANK
     	SubModel tankSubModel = new SubModel();
     	
-    	// static property: maximal capacity of the tank.
+    	// Properties - maximal capacity and current liquid level.
     	Property maxCapacity = new Property();
     	maxCapacity.setIdShort("maxCapacity");
     	maxCapacity.set(VABLambdaProviderHelper.createSimple(() -> {
     		return pasti.getTank().getMaxCapacity(); 
     	}, null), PropertyValueTypeDef.Double);
     	
-    	//dynamic property: current liquid level in the tank. 
+    	
     	Property currentLiquidLevel = new Property();
     	currentLiquidLevel.setIdShort("currentLiquidLevel");
     	currentLiquidLevel.set(VABLambdaProviderHelper.createSimple(() -> {
@@ -93,11 +82,10 @@ public class App_local
     		return returnValue;
     	}, null), PropertyValueTypeDef.Double);
     	   	
-    	
     	tankSubModel.addSubModelElement(maxCapacity);
     	tankSubModel.addSubModelElement(currentLiquidLevel);
     	
-    	// Function 
+    	// Function - fill the tank.
     	Function<Object[], Object> tankFillInvokable = (params) -> {
 		
 			// Connect to the control component
@@ -121,7 +109,7 @@ public class App_local
 			return null;
 		};
 		
-		// Function 
+		// Function - empty the tank.
     	Function<Object[], Object> tankEmptyInvokable = (params) -> {
 		
 			// Connect to the control component
@@ -145,7 +133,7 @@ public class App_local
 			return null;
 		};
 		
-		// Creating the Operation
+		// Creating the Operations
 		Operation operationFillTank = new Operation();
 		Operation operationEmptyTank = new Operation();
 		operationFillTank.setIdShort("fillTank");
@@ -160,10 +148,7 @@ public class App_local
     	tankSubModel.setIdentification(IdentifierType.CUSTOM, "tank");
     	
     	
-    	/**Submodel: Heater
-    	 * 
-    	 */
-    	
+    	// SUBMODEL HEATER
     	SubModel heaterSubModel = new SubModel();
     	
     	// Properties
@@ -190,7 +175,7 @@ public class App_local
     	 * AAS
     	 */
     	AssetAdministrationShell aas = new AssetAdministrationShell();
-    	ModelUrn aasURN = new ModelUrn("de.FHG", "devices.es.iese", "AAS", "1.0", "1", "oven01", "001"); //TODO new name for this device
+    	ModelUrn aasURN = new ModelUrn("", "", "AAS", "", "", "pasteurizator", ""); 
     	aas.setIdentification(aasURN);
     	
     	// TODO delete?
@@ -211,24 +196,17 @@ public class App_local
     	fullProvider.addSubmodel("heater",heaterSMProvider);
     	fullProvider.addSubmodel("tank",tankSMProvider);
     	
-    	
     	HttpServlet aasServlet = new VABHTTPInterface<IModelProvider>(fullProvider);
-    	
-    	// TODO InMemoryRegistry local
     	IAASRegistryService registry = new InMemoryRegistry();
-    	// TODO von mir
-    	//AASRegistryProxy registry = new AASRegistryProxy("http://192.168.2.3:4001");		//es started nicht 
 		IModelProvider registryProvider = new DirectoryModelProvider(registry);
 		HttpServlet registryServlet = new VABHTTPInterface<IModelProvider>(registryProvider);
 		
 		// Register the VAB model at the directory (locally in this case)
 		AASDescriptor aasDescriptor = new AASDescriptor(aas, "http://" + App_local.AAS_IP + ":" 
 				+ App_local.AAS_PORT + "/pasti/aas");
+		// Register Submodels at the AAS Descriptor.
 		aasDescriptor.addSubmodelDescriptor(new SubmodelDescriptor(tankSubModel, 
-				"http://" + App_local.AAS_IP + ":" + App_local.AAS_PORT + "/pasti/aas/submodels/tank/submodel"));
-		
-		//TODO die Registrierung ist essenziell sonst kann der Proxy den Submodel nicht finden (NullPointerExeption)
-		
+				"http://" + App_local.AAS_IP + ":" + App_local.AAS_PORT + "/pasti/aas/submodels/tank/submodel"));		
 		aasDescriptor.addSubmodelDescriptor(new SubmodelDescriptor(heaterSubModel, 
 				"http://" + App_local.AAS_IP + ":" + App_local.AAS_PORT + "/pasti/aas/submodels/heater/submodel"));
 		registry.register(aasDescriptor);
@@ -241,16 +219,6 @@ public class App_local
 		
 		httpServer.start();
 		
-		/*
-		//closing the server
-		try {
-			// Wait for 5s and then shutdown the server
-			Thread.sleep(10000);
-			httpServer.shutdown();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		*/
     }
     
     /** This method creates a control component for the Pasteurizator.

@@ -60,7 +60,7 @@ public class App_local
     	//System.out.println("User Input: " + aas_ip);
     	 * 
     	 */
-        Pasteurizator pasti = new Pasteurizator("Milcherhitzter");
+        Pasteurizator pasti = new Pasteurizator();
         startMyControlComponent(pasti);
         startMyAAS(pasti);
         

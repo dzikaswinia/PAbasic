@@ -19,8 +19,7 @@ import org.eclipse.basyx.vab.protocol.http.connector.HTTPConnectorProvider;
  * 
  * @author monika
  * **/
-public class App_remote 
-{
+public class Client {
 	
 	//GLOBALS: a network address and port of the device on which the AAS is running.
 	//public static String AAS_IP = "147.172.178.150";
@@ -29,15 +28,10 @@ public class App_remote
 	public static int AAS_PORT = 4000;
 	
 	
-    public static void main( String[] args ) throws Exception
-    {
-    	/*
-    	Scanner scanner = new Scanner(System.in);
-    	System.out.println("AAS IP: 192.168.2.");
-    	String aas_ip = "192.168.2." + scanner.nextLine();	//TODO falsche input abfangen
-    	*/
+    public static void main( String[] args ) throws Exception {
+    	
         //Connecting to AAS
-    	IAASRegistryService registry = new AASRegistryProxy("http://" + App_remote.AAS_IP + ":" 
+    	IAASRegistryService registry = new AASRegistryProxy("http://" + Client.AAS_IP + ":" 
     			+ App_local.AAS_PORT + "/registry");
         IConnectorProvider connectorProvider = new HTTPConnectorProvider();
 		ConnectedAssetAdministrationShellManager manager = new ConnectedAssetAdministrationShellManager(registry,

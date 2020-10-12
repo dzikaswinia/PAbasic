@@ -1,19 +1,18 @@
 package staciwa.projektarbeit;
+/**
+ * Class Pasteurizator. 
+ * @author monika
+ *
+ */
 
 public class Pasteurizator {
 	
-	private String name;
 	private Tank tank;
 	private Heater heater;
 	
-	public Pasteurizator(String name) {
-		this.name = name;
+	public Pasteurizator() {
 		this.tank = new Tank(this);
 		this.heater = new Heater();
-	}
-	
-	public String getName() {
-		return name;
 	}
 	
 	public Tank getTank() {
@@ -24,8 +23,4 @@ public class Pasteurizator {
 		return heater;
 	}
 	
-	public void fillTank() {
-		tank.fill();
-	}
-
 }

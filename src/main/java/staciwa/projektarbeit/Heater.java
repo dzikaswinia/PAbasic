@@ -73,7 +73,7 @@ public class Heater {
 	 * by 10.0 till the {@link maxTemp} is reached. 
 	 */
 	public void heat() {
-		System.out.println("Heater:	The method heat() has been activated.");
+		System.out.println("\nHeater:	The method heat() has been activated.");
 		while(currentTemp < maxTemp) {
 			System.out.println("Heater:	current temperature - " + currentTemp);
 			if (currentTemp <= (maxTemp - 10)) {

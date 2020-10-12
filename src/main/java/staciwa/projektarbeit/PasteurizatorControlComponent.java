@@ -1,5 +1,7 @@
 package staciwa.projektarbeit;
-
+/**
+ * Class PasteurizatorControlComponent implements Control Component for the device Pasteurizator.
+ */
 import org.eclipse.basyx.models.controlcomponent.ControlComponentChangeListener;
 import org.eclipse.basyx.models.controlcomponent.ExecutionMode;
 import org.eclipse.basyx.models.controlcomponent.ExecutionState;
@@ -8,6 +10,9 @@ import org.eclipse.basyx.models.controlcomponent.SimpleControlComponent;
 
 public class PasteurizatorControlComponent extends SimpleControlComponent implements ControlComponentChangeListener {
 
+	private static final long serialVersionUID = 1L;
+
+	// Operation modes
 	public static final String OPMODE_BASIC = "BSTATE";
 	public static final String OPMODE_FILL = "FILL";
 	public static final String OPMODE_EMPTY = "EMPTY";
@@ -19,10 +24,11 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 		addControlComponentChangeListener(this);
 	}
 	
-	// changing execution state
 	@Override
 	public void onChangedExecutionState(ExecutionState newExecutionState) {
-		System.out.println("CC:	new execution state: " + newExecutionState ); //TODO
+		
+		System.out.println("\nCC:	new execution state: " + newExecutionState ); 
+		
 		if (newExecutionState == ExecutionState.EXECUTE) {
 			String opMode = this.getOperationMode();
 			switch(opMode) {
@@ -37,19 +43,21 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 			}		
 		}
 	}
-	
-	/* Es füllt den Tank 
-	 * */
+	/**
+	 * This method fills the tank and when the maximal capacity is reached, it activates the heater.
+	 */
 	protected void fillTank() {
 		
 		new Thread(() -> {
-			System.out.println("\nCC: the tank is full - " + pasti.getTank().getIsFull());
+			
+			System.out.println("\nCC: the method fillTank has been invoked");
+			
 			if (!(pasti.getTank().getIsFull())) {
 				pasti.getTank().fill();
 			} else {
 				pasti.getTank().setIsFull(true);
-				System.out.println("\nCC: the tank is full - " + pasti.getTank().getIsFull());
-				System.out.println("\nCC: the current temperatur of the liquid is " + pasti.getHeater().getCurrentTemp());
+				//System.out.println("\nCC: the tank is full - " + pasti.getTank().getIsFull());
+				System.out.println("CC: the current temperatur of the liquid is " + pasti.getHeater().getCurrentTemp());
 			}
 			try {
 				Thread.sleep(100);
@@ -57,15 +65,20 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 				e.printStackTrace();
 			}
 			setExecutionState(ExecutionState.COMPLETE.getValue());
+			
 		}).start();
 		
 
 	}
-	
+	/**
+	 * This method empties the tank.
+	 */
 	protected void emptyTank() {
 		
 		new Thread(() -> {
-			System.out.println("CC: method emptyTank() has been invoked.");
+			
+			System.out.println("\nCC: method emptyTank() has been invoked.");
+			
 			if (!(pasti.getTank().getIsEmpty())) {
 				pasti.getTank().empty();
 			} 
@@ -78,7 +91,6 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 		}).start();
 		
 	}
-	
 	
 	@Override
 	public void onVariableChange(String varName, Object newValue) {
@@ -104,8 +116,6 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 		
 	}
 
-	
-
 	@Override
 	public void onChangedOperationMode(String newOperationMode) {
 		// TODO Auto-generated method stub
@@ -123,7 +133,5 @@ public class PasteurizatorControlComponent extends SimpleControlComponent implem
 		// TODO Auto-generated method stub
 		
 	}
-
-	
 	
 }

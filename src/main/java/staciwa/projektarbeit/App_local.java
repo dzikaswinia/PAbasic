@@ -50,7 +50,7 @@ public class App_local
     public static void main( String[] args ) throws Exception
     {
         
-    	System.out.println("Welcome to Pasteurizator's AAS");
+    	System.out.println("\n\nWelcome to Pasteurizator Simulation - AAS\n\n");
         Pasteurizator pasti = new Pasteurizator();
         startMyControlComponent(pasti);
         startMyAAS(pasti);
@@ -78,7 +78,7 @@ public class App_local
     	currentLiquidLevel.setIdShort("currentLiquidLevel");
     	currentLiquidLevel.set(VABLambdaProviderHelper.createSimple(() -> {
     		double returnValue = pasti.getTank().getCurrentLiquidLevel();  
-    		System.out.println("\nApp_local: currentLiquidLevel angefragt: " + returnValue);
+    		//System.out.println("\nApp_local: currentLiquidLevel angefragt: " + returnValue);	TODO
     		return returnValue;
     	}, null), PropertyValueTypeDef.Double);
     	   	
@@ -162,13 +162,13 @@ public class App_local
     	currentTemp.setIdShort("currentTemp");
     	currentTemp.set(VABLambdaProviderHelper.createSimple(() -> {
     		double returnValue = pasti.getHeater().getCurrentTemp(); 
-    		System.out.println("App_local: currentTemp angefragt " + returnValue);
+    		//System.out.println("App_local: currentTemp angefragt " + returnValue);	TODO
     		return returnValue;
     	}, null), PropertyValueTypeDef.Double);
     	
     	heaterSubModel.addSubModelElement(maxTemp);
     	heaterSubModel.addSubModelElement(currentTemp);
-    	heaterSubModel.setIdShort("heater");
+    	heaterSubModel.setIdShort("submodel_heater");
     	heaterSubModel.setIdentification(IdentifierType.CUSTOM, "heater");
     	
     	/**

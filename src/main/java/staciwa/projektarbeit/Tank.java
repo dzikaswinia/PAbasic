@@ -77,7 +77,7 @@ public class Tank {
 	 * and  calls the method of {@link Heater} {@link tankIsFull}.  
 	 */
 	public void fill() {
-		System.out.println("Tank: The fill() methode has been invoked.");
+		System.out.println("\nTank: The fill() methode has been invoked.");
 		isEmpty = false;
 		while(!(isFull)) {
 			System.out.println("Tank: Current liquid level - " + currentLiquidLevel);
@@ -94,7 +94,7 @@ public class Tank {
 	 * This method decrease the current liquid level in the tank till the tank is empty.
 	 */
 	public void empty() {
-		System.out.println("Tank: The empty() methode has been invoked");
+		System.out.println("\nTank: The empty() methode has been invoked");
 		isFull = false;
 		while(!(isEmpty)) {
 			System.out.println("Tank: Current liquid level - " + currentLiquidLevel);

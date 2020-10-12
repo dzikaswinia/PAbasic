@@ -48,7 +48,7 @@ public class Client {
 		System.out.print("\nSubmodel \"Tank\" with short ID \"" + connectedTankSM.getIdShort() + "\" has been retrieved.\n");
 		
 		//Heating the liquid
-		ISubModel connectedHeaterSM = submodels.get("heater");
+		ISubModel connectedHeaterSM = submodels.get("submodel_heater");
 		String shortid = connectedHeaterSM.getIdShort();
 		System.out.print("\nSubmodel \"Heater\" with short ID \"" + connectedHeaterSM.getIdShort() + "\" has been retrieved.\n");
 		
@@ -56,7 +56,7 @@ public class Client {
 		Map<String, ISubmodelElement> propertiesTank = connectedTankSM.getSubmodelElements(); 
 		IProperty maxCapPro = (IProperty) propertiesTank.get("maxCapacity");
 		Double maxCap = (Double) maxCapPro.get();
-		System.out.print("\n\tThe maximal capacity of the tank: " + maxCap);
+		System.out.println("\n\tThe maximal capacity of the tank: " + maxCap);
 		IProperty currentLiquidLevel = (IProperty) propertiesTank.get("currentLiquidLevel");
 		Double curLiqLev = (Double) currentLiquidLevel.get();
 		

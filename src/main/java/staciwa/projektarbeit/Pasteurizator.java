@@ -4,7 +4,6 @@ package staciwa.projektarbeit;
  * @author monika
  *
  */
-
 public class Pasteurizator {
 	
 	private Tank tank;

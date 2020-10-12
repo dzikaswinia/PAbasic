@@ -144,7 +144,7 @@ public class App_local
 		tankSubModel.addSubModelElement(operationEmptyTank);
     	
 		// Setting identifiers. 
-    	tankSubModel.setIdShort("tank_id");
+    	tankSubModel.setIdShort("submodel_tank");
     	tankSubModel.setIdentification(IdentifierType.CUSTOM, "tank");
     	
     	
@@ -178,16 +178,15 @@ public class App_local
     	ModelUrn aasURN = new ModelUrn("", "", "AAS", "", "", "pasteurizator", ""); 
     	aas.setIdentification(aasURN);
     	
-    	// TODO delete?
+    	// Optional in this local setting.
     	//IIdentifier aasID = new Identifier(IdentifierType.CUSTOM, "pasti");
-    	//aas.setIdentification(aasID);
     	aas.setIdShort("pasti");
     	
     	/**
     	 * Deployment
     	 */
     	
-    	//Wrapping submodel in IModelProvider
+    	//Wrapping Submodels in IModelProvider
     	AASModelProvider aasProvider = new AASModelProvider(aas);
     	SubModelProvider tankSMProvider = new SubModelProvider(tankSubModel);
     	SubModelProvider heaterSMProvider = new SubModelProvider(heaterSubModel);

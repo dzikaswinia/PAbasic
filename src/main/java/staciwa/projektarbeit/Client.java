@@ -30,6 +30,8 @@ public class Client {
 	
     public static void main( String[] args ) throws Exception {
     	
+    	System.out.println("\n\nWelcome to the Pasteurizator Simulation CLIENT\n\n");
+    	
         //Connecting to AAS
     	IAASRegistryService registry = new AASRegistryProxy("http://" + Client.AAS_IP + ":" 
     			+ App_local.AAS_PORT + "/registry");
@@ -42,24 +44,31 @@ public class Client {
 		ConnectedAssetAdministrationShell connectedAAS = manager.retrieveAAS(aasURN);
 		// Retrieving the tank's submodel.
 		Map<String, ISubModel> submodels = connectedAAS.getSubModels();
-		ISubModel connectedTankSM = submodels.get("tank_id");
-		System.out.println("Submodels: " + submodels);
-		System.out.print("Submodel \"Tank\" with short ID \"" + connectedTankSM.getIdShort() + "\" has been retrieved.");
+		ISubModel connectedTankSM = submodels.get("submodel_tank");
+		System.out.print("\nSubmodel \"Tank\" with short ID \"" + connectedTankSM.getIdShort() + "\" has been retrieved.\n");
 		
 		//Heating the liquid
 		ISubModel connectedHeaterSM = submodels.get("heater");
 		String shortid = connectedHeaterSM.getIdShort();
-		System.out.print("\nSubmodel \"Heater\" with short ID \"" + connectedHeaterSM.getIdShort() + "\" has been retrieved.");
+		System.out.print("\nSubmodel \"Heater\" with short ID \"" + connectedHeaterSM.getIdShort() + "\" has been retrieved.\n");
 		
 		// Retrieving the properties of the submodel tank.
 		Map<String, ISubmodelElement> propertiesTank = connectedTankSM.getSubmodelElements(); 
 		IProperty maxCapPro = (IProperty) propertiesTank.get("maxCapacity");
 		Double maxCap = (Double) maxCapPro.get();
-		System.out.print("\nThe maximal capacity of the " + connectedTankSM.getIdShort() + ": " + maxCap);
+		System.out.print("\nThe maximal capacity of the tank: " + maxCap);
 		IProperty currentLiquidLevel = (IProperty) propertiesTank.get("currentLiquidLevel");
 		Double curLiqLev = (Double) currentLiquidLevel.get();
-		System.out.println("\nCurrent liquid level: " + curLiqLev);
 		
+		// Retrieving the properties of the Submodel heater.
+		Map<String, ISubmodelElement> propertiesHeater = connectedHeaterSM.getSubmodelElements(); 
+		IProperty currentTemp = (IProperty) propertiesHeater.get("currentTemp");
+		Double currentLiquidTemp = (Double) currentTemp.get();
+				
+		System.out.println("\n\tCurrent liquid level: " + curLiqLev);
+		System.out.println("\n\tCurrent temperatur of the liquid: " + currentLiquidTemp + "°C");
+		
+		System.out.println("\nFilling the tank with liquid and heating the liquid.");
 		Map<String, IOperation> operationsTank = connectedTankSM.getOperations();
 		IOperation tankOperation = operationsTank.get("fillTank");
 		tankOperation.invoke();
@@ -67,26 +76,23 @@ public class Client {
 		Thread.sleep(3000);
 		
 		curLiqLev = (Double) currentLiquidLevel.get();
-		System.out.println("\nCurrent liquid level: " + curLiqLev + "\n");
-		
-		// Retrieving the properties of the submodel tank.
-		Map<String, ISubmodelElement> propertiesHeater = connectedHeaterSM.getSubmodelElements(); 
-		IProperty currentTemp = (IProperty) propertiesHeater.get("currentTemp");
-		Double currentLiquidTemp = (Double) currentTemp.get();
-		System.out.println("Current temperatur of the liquid: " + currentLiquidTemp);
-		
-		//Empty tank
-		IOperation emptyTank = operationsTank.get("emptyTank");
-		emptyTank.invoke();
-		
-		curLiqLev = (Double) currentLiquidLevel.get();
-		System.out.println("\nCurrent liquid level: " + curLiqLev + "\n");
-		
+		currentLiquidTemp = (Double) currentTemp.get();
+		System.out.println("\n\tCurrent liquid level: " + curLiqLev);
+		System.out.println("\n\tCurrent temperatur of the liquid: " + currentLiquidTemp + "°C");
+						
 		//cooling down for 5s
 		Thread.sleep(5000);
 		
 		currentLiquidTemp = (Double) currentTemp.get();
-		System.out.println("Current temperatur of the liquid: " + currentLiquidTemp);
+		System.out.println("\n\tTemperatur of the liquid after 5s: " + currentLiquidTemp + "°C");
+		
+		//Empty tank
+		System.out.println("\nEmptying the tank.");
+		IOperation emptyTank = operationsTank.get("emptyTank");
+		emptyTank.invoke();
+		
+		curLiqLev = (Double) currentLiquidLevel.get();
+		System.out.println("\n\tCurrent liquid level: " + curLiqLev);
 		
     } 
     

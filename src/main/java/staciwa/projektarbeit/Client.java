@@ -34,7 +34,7 @@ public class Client {
     	
         //Connecting to AAS
     	IAASRegistryService registry = new AASRegistryProxy("http://" + Client.AAS_IP + ":" 
-    			+ App_local.AAS_PORT + "/registry");
+    			+ InfrastructureStarter.AAS_PORT + "/registry");
         IConnectorProvider connectorProvider = new HTTPConnectorProvider();
 		ConnectedAssetAdministrationShellManager manager = new ConnectedAssetAdministrationShellManager(registry,
 				connectorProvider);

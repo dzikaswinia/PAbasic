@@ -38,7 +38,7 @@ import org.eclipse.basyx.vab.protocol.http.server.VABHTTPInterface;
  * 
  * @author monika
  * **/
-public class App_local 
+public class InfrastructureStarter 
 {
 	//Address and port of the device, on which the AAS is running.
 	public static String AAS_IP = "192.168.2.3";
@@ -89,7 +89,7 @@ public class App_local
     	Function<Object[], Object> tankFillInvokable = (params) -> {
 		
 			// Connect to the control component
-			VABElementProxy proxy = new VABElementProxy("", new JSONConnector(new BaSyxConnector(App_local.AAS_IP, App_local.CC_PORT)));
+			VABElementProxy proxy = new VABElementProxy("", new JSONConnector(new BaSyxConnector(InfrastructureStarter.AAS_IP, InfrastructureStarter.CC_PORT)));
  
 			// Select the operation from the control component
 			proxy.setModelPropertyValue("status/opMode", PasteurizatorControlComponent.OPMODE_FILL);
@@ -113,7 +113,7 @@ public class App_local
     	Function<Object[], Object> tankEmptyInvokable = (params) -> {
 		
 			// Connect to the control component
-			VABElementProxy proxy = new VABElementProxy("", new JSONConnector(new BaSyxConnector(App_local.AAS_IP, App_local.CC_PORT)));
+			VABElementProxy proxy = new VABElementProxy("", new JSONConnector(new BaSyxConnector(InfrastructureStarter.AAS_IP, InfrastructureStarter.CC_PORT)));
  
 			// Select the operation from the control component
 			proxy.setModelPropertyValue("status/opMode", PasteurizatorControlComponent.OPMODE_EMPTY);
@@ -201,17 +201,17 @@ public class App_local
 		HttpServlet registryServlet = new VABHTTPInterface<IModelProvider>(registryProvider);
 		
 		// Register the VAB model at the directory (locally in this case)
-		AASDescriptor aasDescriptor = new AASDescriptor(aas, "http://" + App_local.AAS_IP + ":" 
-				+ App_local.AAS_PORT + "/pasti/aas");
+		AASDescriptor aasDescriptor = new AASDescriptor(aas, "http://" + InfrastructureStarter.AAS_IP + ":" 
+				+ InfrastructureStarter.AAS_PORT + "/pasti/aas");
 		// Register Submodels at the AAS Descriptor.
 		aasDescriptor.addSubmodelDescriptor(new SubmodelDescriptor(tankSubModel, 
-				"http://" + App_local.AAS_IP + ":" + App_local.AAS_PORT + "/pasti/aas/submodels/tank/submodel"));		
+				"http://" + InfrastructureStarter.AAS_IP + ":" + InfrastructureStarter.AAS_PORT + "/pasti/aas/submodels/tank/submodel"));		
 		aasDescriptor.addSubmodelDescriptor(new SubmodelDescriptor(heaterSubModel, 
-				"http://" + App_local.AAS_IP + ":" + App_local.AAS_PORT + "/pasti/aas/submodels/heater/submodel"));
+				"http://" + InfrastructureStarter.AAS_IP + ":" + InfrastructureStarter.AAS_PORT + "/pasti/aas/submodels/heater/submodel"));
 		registry.register(aasDescriptor);
 		
 		// Deploy the AAS on a HTTP server
-		BaSyxContext context = new BaSyxContext("", "", App_local.AAS_IP, App_local.AAS_PORT);
+		BaSyxContext context = new BaSyxContext("", "", InfrastructureStarter.AAS_IP, InfrastructureStarter.AAS_PORT);
 		context.addServletMapping("/pasti/*", aasServlet);
 		context.addServletMapping("/registry/*", registryServlet);
 		AASHTTPServer httpServer = new AASHTTPServer(context);
@@ -229,7 +229,7 @@ public class App_local
     	ControlComponent cc = new PasteurizatorControlComponent(pasti);
     	// Server where the control component is reachable.
     	VABMapProvider ccProvider = new VABMapProvider(cc);
-    	BaSyxTCPServer<VABMapProvider> server = new BaSyxTCPServer<>(ccProvider, App_local.CC_PORT);
+    	BaSyxTCPServer<VABMapProvider> server = new BaSyxTCPServer<>(ccProvider, InfrastructureStarter.CC_PORT);
     	server.start();
     	
     }

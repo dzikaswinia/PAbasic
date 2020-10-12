@@ -56,7 +56,7 @@ public class Client {
 		Map<String, ISubmodelElement> propertiesTank = connectedTankSM.getSubmodelElements(); 
 		IProperty maxCapPro = (IProperty) propertiesTank.get("maxCapacity");
 		Double maxCap = (Double) maxCapPro.get();
-		System.out.print("\nThe maximal capacity of the tank: " + maxCap);
+		System.out.print("\n\tThe maximal capacity of the tank: " + maxCap);
 		IProperty currentLiquidLevel = (IProperty) propertiesTank.get("currentLiquidLevel");
 		Double curLiqLev = (Double) currentLiquidLevel.get();
 		
@@ -65,8 +65,8 @@ public class Client {
 		IProperty currentTemp = (IProperty) propertiesHeater.get("currentTemp");
 		Double currentLiquidTemp = (Double) currentTemp.get();
 				
-		System.out.println("\n\tCurrent liquid level: " + curLiqLev);
-		System.out.println("\n\tCurrent temperatur of the liquid: " + currentLiquidTemp + "°C");
+		System.out.println("\tCurrent liquid level: " + curLiqLev);
+		System.out.println("\tCurrent temperatur of the liquid: " + currentLiquidTemp + "°C");
 		
 		System.out.println("\nFilling the tank with liquid and heating the liquid.");
 		Map<String, IOperation> operationsTank = connectedTankSM.getOperations();
@@ -77,14 +77,14 @@ public class Client {
 		
 		curLiqLev = (Double) currentLiquidLevel.get();
 		currentLiquidTemp = (Double) currentTemp.get();
-		System.out.println("\n\tCurrent liquid level: " + curLiqLev);
-		System.out.println("\n\tCurrent temperatur of the liquid: " + currentLiquidTemp + "°C");
+		System.out.println("\tCurrent liquid level: " + curLiqLev);
+		System.out.println("\tCurrent temperatur of the liquid: " + currentLiquidTemp + "°C");
 						
 		//cooling down for 5s
 		Thread.sleep(5000);
 		
 		currentLiquidTemp = (Double) currentTemp.get();
-		System.out.println("\n\tTemperatur of the liquid after 5s: " + currentLiquidTemp + "°C");
+		System.out.println("\tTemperatur of the liquid after 5s: " + currentLiquidTemp + "°C");
 		
 		//Empty tank
 		System.out.println("\nEmptying the tank.");
@@ -92,7 +92,7 @@ public class Client {
 		emptyTank.invoke();
 		
 		curLiqLev = (Double) currentLiquidLevel.get();
-		System.out.println("\n\tCurrent liquid level: " + curLiqLev);
+		System.out.println("\tCurrent liquid level: " + curLiqLev);
 		
     } 
     

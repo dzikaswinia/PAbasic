@@ -33,7 +33,7 @@ public class Heater {
 		LocalTime now = LocalTime.now();
 		Long timeDiff = Duration.between(lastTempAccess,now).getSeconds();
 		// simulate cooling of milk with a linear function (simple but not realistic)
-	 	double tempDiff = timeDiff.doubleValue() * 0.1;
+	 	double tempDiff = timeDiff.doubleValue() * 0.05;
 	 	double newTemp = currentTemp - tempDiff;
 	 	if (newTemp < environmentTemp) {
 	 		currentTemp = environmentTemp;
